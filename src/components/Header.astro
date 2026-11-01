@@ -1,0 +1,94 @@
+---
+import Icon from './Icon.astro';
+import { navigation } from '@/data/navigation';
+import { profile } from '@/data/profile';
+---
+
+<header
+  class="fixed inset-x-0 top-0 z-50 border-b border-border/70 bg-bg/80 backdrop-blur-md supports-[backdrop-filter]:bg-bg/70"
+>
+  <nav class="container-page flex h-16 items-center justify-between" aria-label="Principal">
+    <a href="#inicio" class="group flex items-center gap-2 font-semibold text-heading">
+      <span
+        class="grid size-8 place-items-center rounded-lg bg-navy font-mono text-sm text-white transition-transform group-hover:-rotate-6"
+        aria-hidden="true">KP</span
+      >
+      <span>{profile.shortName}</span>
+    </a>
+
+    <ul class="hidden items-center gap-1 md:flex">
+      {
+        navigation.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              class="rounded-md px-3 py-2 text-sm font-medium text-muted transition-colors hover:text-accent"
+            >
+              {item.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <button
+      type="button"
+      class="-mr-2 rounded-md p-2 text-heading md:hidden"
+      aria-controls="mobile-menu"
+      aria-expanded="false"
+      data-menu-toggle
+    >
+      <span class="sr-only">Abrir menú</span>
+      <span data-icon-open><Icon name="lucide:menu" class="size-6" /></span>
+      <span data-icon-close hidden><Icon name="lucide:x" class="size-6" /></span>
+    </button>
+  </nav>
+
+  <div id="mobile-menu" class="border-t border-border bg-bg md:hidden" hidden>
+    <ul class="container-page flex flex-col py-2">
+      {
+        navigation.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              class="block rounded-md px-2 py-3 font-medium text-fg hover:text-accent"
+              data-menu-link
+            >
+              {item.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const menu = document.getElementById('mobile-menu');
+
+  if (toggle && menu) {
+    const label = toggle.querySelector('.sr-only');
+    const iconOpen = toggle.querySelector<HTMLElement>('[data-icon-open]');
+    const iconClose = toggle.querySelector<HTMLElement>('[data-icon-close]');
+
+    const setOpen = (open: boolean) => {
+      toggle.setAttribute('aria-expanded', String(open));
+      menu.hidden = !open;
+      if (iconOpen) iconOpen.hidden = open;
+      if (iconClose) iconClose.hidden = !open;
+      if (label) label.textContent = open ? 'Cerrar menú' : 'Abrir menú';
+    };
+
+    toggle.addEventListener('click', () => setOpen(Boolean(menu.hidden)));
+    menu.querySelectorAll('[data-menu-link]').forEach((link) =>
+      link.addEventListener('click', () => setOpen(false)),
+    );
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !menu.hidden) {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+  }
+</script>

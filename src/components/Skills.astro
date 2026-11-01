@@ -1,0 +1,32 @@
+---
+import Icon from './Icon.astro';
+import SectionHeading from './SectionHeading.astro';
+import { skillGroups } from '@/data/skills';
+---
+
+<section id="stack" class="bg-surface-muted/50 py-20 sm:py-24" aria-labelledby="stack-title">
+  <div class="container-page">
+    <SectionHeading id="stack-title" eyebrow="stack" title="Stack técnico" />
+
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        skillGroups.map((group) => (
+          <section class="reveal rounded-xl border border-border bg-surface p-6" aria-label={group.title}>
+            <h3 class="flex items-center gap-2 font-semibold text-heading">
+              <Icon name={group.icon} class="size-5 text-accent" />
+              {group.title}
+            </h3>
+            <ul class="mt-4 flex flex-wrap gap-2">
+              {group.skills.map((skill) => (
+                <li class="inline-flex items-center gap-1.5 rounded-md border border-border bg-surface-muted px-2.5 py-1 text-sm text-fg">
+                  {skill.icon && <Icon name={skill.icon} class="size-4 text-muted" />}
+                  {skill.name}
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))
+      }
+    </div>
+  </div>
+</section>

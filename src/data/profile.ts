@@ -1,4 +1,5 @@
 import type { Profile } from '@/types';
+import photo from '@/assets/foto.jpg';
 
 export const profile: Profile = {
   name: 'Kevin Raúl Pozuelos Estrada',
@@ -9,7 +10,7 @@ export const profile: Profile = {
   location: 'Ciudad de Guatemala, Guatemala',
   email: 'kevin.pozuelosestrada@gmail.com',
   photo: {
-    src: 'foto.jpg',
+    src: photo,
     alt: 'Fotografía de perfil de Kevin Raúl Pozuelos Estrada',
   },
   cv: {

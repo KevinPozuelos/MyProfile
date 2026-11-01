@@ -1,0 +1,27 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import { profile } from '@/data/profile';
+---
+
+<section id="sobre-mi" class="py-20 sm:py-24" aria-labelledby="sobre-mi-title">
+  <div class="container-page">
+    <SectionHeading id="sobre-mi-title" eyebrow="sobre mí" title="Backend con mentalidad de producción" />
+
+    <div class="grid gap-10 lg:grid-cols-[3fr_2fr]">
+      <div class="reveal space-y-4 text-lg leading-relaxed text-muted">
+        {profile.about.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+
+      <dl class="reveal grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
+        {
+          profile.highlights.map((item) => (
+            <div class="flex flex-col rounded-xl border border-border bg-surface p-5">
+              <dt class="text-sm text-muted">{item.label}</dt>
+              <dd class="order-first font-mono text-xl font-semibold text-heading">{item.value}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </div>
+</section>

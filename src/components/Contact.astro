@@ -1,0 +1,60 @@
+---
+import Icon from './Icon.astro';
+import SectionHeading from './SectionHeading.astro';
+import { profile } from '@/data/profile';
+import { isExternal } from '@/lib/utils';
+---
+
+<section id="contacto" class="bg-surface-muted/50 py-20 sm:py-24" aria-labelledby="contacto-title">
+  <div class="container-page">
+    <SectionHeading
+      id="contacto-title"
+      eyebrow="contacto"
+      title="Hablemos"
+      description="¿Tienes un proyecto, una vacante o una idea? Escríbeme y te respondo pronto."
+    />
+
+    <div class="reveal grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
+      <ul class="grid gap-4 sm:grid-cols-2">
+        {
+          profile.socials.map((social) => {
+            const external = isExternal(social.href);
+            const display = social.href.replace(/^mailto:/, '').replace(/^https?:\/\//, '');
+            return (
+              <li>
+                <a
+                  href={social.href}
+                  {...(external && { target: '_blank', rel: 'noopener noreferrer' })}
+                  class="flex items-center gap-4 rounded-xl border border-border bg-surface p-5 transition-colors hover:border-accent"
+                >
+                  <span class="grid size-11 shrink-0 place-items-center rounded-lg bg-surface-muted text-accent">
+                    <Icon name={social.icon} class="size-5" />
+                  </span>
+                  <span class="min-w-0">
+                    <span class="block text-sm text-muted">{social.label}</span>
+                    <span class="block truncate font-medium text-fg">{display}</span>
+                  </span>
+                  {external && <span class="sr-only">(abre en una pestaña nueva)</span>}
+                </a>
+              </li>
+            );
+          })
+        }
+        <li class="flex items-center gap-4 rounded-xl border border-border bg-surface p-5">
+          <span class="grid size-11 shrink-0 place-items-center rounded-lg bg-surface-muted text-accent">
+            <Icon name="lucide:map-pin" class="size-5" />
+          </span>
+          <span>
+            <span class="block text-sm text-muted">Ubicación</span>
+            <span class="block font-medium text-fg">{profile.location}</span>
+          </span>
+        </li>
+      </ul>
+
+      <a href={`mailto:${profile.email}`} class="btn-primary px-6 py-3 text-base">
+        <Icon name="lucide:mail" class="size-5" />
+        Enviar un correo
+      </a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,59 @@
+---
+import Icon from './Icon.astro';
+import SectionHeading from './SectionHeading.astro';
+import TagList from './TagList.astro';
+import { experience } from '@/data/experience';
+import { formatPeriod } from '@/lib/utils';
+---
+
+<section id="experiencia" class="bg-surface-muted/50 py-20 sm:py-24" aria-labelledby="experiencia-title">
+  <div class="container-page">
+    <SectionHeading id="experiencia-title" eyebrow="experiencia" title="Dónde he trabajado" />
+
+    <ol class="relative space-y-10 border-l-2 border-border pl-8 sm:pl-10">
+      {
+        experience.map((job) => (
+          <li class="reveal relative">
+            <span
+              class="absolute top-1 -left-[2.65rem] grid size-9 place-items-center rounded-full border-2 border-accent bg-surface text-accent sm:-left-[3.15rem]"
+              aria-hidden="true"
+            >
+              <Icon name="lucide:briefcase" class="size-4" />
+            </span>
+
+            <article class="rounded-xl border border-border bg-surface p-6 shadow-sm">
+              <header class="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
+                <div>
+                  <h3 class="text-lg font-semibold text-heading">{job.role}</h3>
+                  <p class="font-medium text-accent">
+                    {job.organization} <span class="text-muted">({job.organizationShort})</span>
+                  </p>
+                </div>
+                <p class="shrink-0 font-mono text-sm text-muted">
+                  <time datetime={job.start}>{formatPeriod(job.start, job.end)}</time>
+                </p>
+              </header>
+              <p class="mt-1 flex items-center gap-1 text-sm text-muted">
+                <Icon name="lucide:map-pin" class="size-3.5" />
+                {job.location}
+              </p>
+
+              <ul class="mt-4 space-y-2 text-muted">
+                {job.achievements.map((item) => (
+                  <li class="flex gap-3">
+                    <span class="mt-2.5 size-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <div class="mt-5">
+                <TagList tags={job.tags} label={`Tecnologías en ${job.organizationShort}`} />
+              </div>
+            </article>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>

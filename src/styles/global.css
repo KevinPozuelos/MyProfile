@@ -1,0 +1,134 @@
+@import 'tailwindcss';
+
+/*
+ * Tokens semánticos. Los valores cambian con el tema del sistema
+ * y Tailwind los expone como utilidades (bg-surface, text-accent, ...).
+ */
+:root {
+  --navy: #1f3a5f;
+  --blue: #2f6fb3;
+
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --surface-muted: #eef3f9;
+  --fg: #0f1b2d;
+  --muted: #4a5a70;
+  --border: #dbe3ee;
+  --heading: var(--navy);
+  --accent: var(--blue);
+  --accent-hover: #245a94;
+  --on-accent: #ffffff;
+  --grid-line: rgb(31 58 95 / 0.06);
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0a1220;
+    --surface: #101b2d;
+    --surface-muted: #15233a;
+    --fg: #e4ebf5;
+    --muted: #a3b2c7;
+    --border: #22324b;
+    --heading: #f1f5fb;
+    --accent: #6fa8e6;
+    --accent-hover: #93bfee;
+    --on-accent: #0a1220;
+    --grid-line: rgb(111 168 230 / 0.07);
+
+    color-scheme: dark;
+  }
+}
+
+@theme inline {
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, 'SFMono-Regular', 'Cascadia Code', Menlo, Consolas, monospace;
+
+  --color-navy: var(--navy);
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-heading: var(--heading);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-on-accent: var(--on-accent);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* compensa la navegación fija al saltar a un ancla */
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-bg font-sans text-fg antialiased;
+  }
+
+  :focus-visible {
+    @apply rounded-sm outline-2 outline-offset-2 outline-accent;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold transition-colors duration-200;
+  }
+
+  .btn-primary {
+    @apply bg-accent text-on-accent hover:bg-accent-hover;
+  }
+
+  .btn-secondary {
+    @apply border border-border bg-surface text-fg hover:border-accent hover:text-accent;
+  }
+
+  .tag {
+    @apply inline-flex items-center rounded-md border border-border bg-surface-muted px-2 py-0.5 font-mono text-xs text-muted;
+  }
+
+  .bg-grid {
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: radial-gradient(ellipse at top, black 30%, transparent 75%);
+  }
+}
+
+/* Animación sutil al entrar en pantalla. Solo se oculta si hay JS y el usuario no pidió menos movimiento. */
+@media (prefers-reduced-motion: no-preference) {
+  html.js .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity 0.6s ease-out,
+      transform 0.6s ease-out;
+  }
+
+  html.js .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

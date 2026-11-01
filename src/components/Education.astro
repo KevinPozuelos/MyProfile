@@ -1,0 +1,48 @@
+---
+import Icon from './Icon.astro';
+import SectionHeading from './SectionHeading.astro';
+import { education, languages } from '@/data/education';
+---
+
+<section id="formacion" class="py-20 sm:py-24" aria-labelledby="formacion-title">
+  <div class="container-page">
+    <SectionHeading id="formacion-title" eyebrow="formación" title="Formación e idiomas" />
+
+    <div class="grid gap-6 md:grid-cols-[2fr_1fr]">
+      <div class="reveal rounded-xl border border-border bg-surface p-6">
+        <h3 class="flex items-center gap-2 font-semibold text-heading">
+          <Icon name="lucide:graduation-cap" class="size-5 text-accent" />
+          Formación académica
+        </h3>
+        <ul class="mt-4 space-y-4">
+          {
+            education.map((item) => (
+              <li>
+                <p class="text-lg font-semibold text-fg">{item.degree}</p>
+                <p class="text-muted">{item.institution}</p>
+                <p class="mt-1 font-mono text-sm text-accent">{item.status}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="reveal rounded-xl border border-border bg-surface p-6">
+        <h3 class="flex items-center gap-2 font-semibold text-heading">
+          <Icon name="lucide:languages" class="size-5 text-accent" />
+          Idiomas
+        </h3>
+        <dl class="mt-4 space-y-3">
+          {
+            languages.map((lang) => (
+              <div class="flex items-center justify-between gap-4">
+                <dt class="font-medium text-fg">{lang.name}</dt>
+                <dd class="tag">{lang.level}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>

@@ -18,8 +18,9 @@ export interface Profile {
   tagline: string;
   location: string;
   email: string;
-  /** Rutas relativas a `public/`; se resuelven con el `base` del sitio. */
-  photo: { src: string; alt: string };
+  /** Asset de `src/assets`: Astro lo optimiza (AVIF/WebP, tamaños responsivos). */
+  photo: { src: ImageMetadata; alt: string };
+  /** Ruta relativa a `public/`; se resuelve con el `base` del sitio. */
   cv: { href: string; fileName: string };
   about: string[];
   highlights: { value: string; label: string }[];
