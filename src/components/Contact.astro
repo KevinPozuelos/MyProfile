@@ -14,8 +14,8 @@ import { isExternal } from '@/lib/utils';
       description="¿Tienes un proyecto, una vacante o una idea? Escríbeme y te respondo pronto."
     />
 
-    <div class="reveal grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
-      <ul class="grid gap-4 sm:grid-cols-2">
+    <div class="reveal grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
+      <ul class="grid grid-cols-1 gap-4 sm:grid-cols-2">
         {
           profile.socials.map((social) => {
             const external = isExternal(social.href);
@@ -32,7 +32,7 @@ import { isExternal } from '@/lib/utils';
                   </span>
                   <span class="min-w-0">
                     <span class="block text-sm text-muted">{social.label}</span>
-                    <span class="block truncate font-medium text-fg">{display}</span>
+                    <span class="block font-medium [overflow-wrap:anywhere] text-fg">{display}</span>
                   </span>
                   {external && <span class="sr-only">(abre en una pestaña nueva)</span>}
                 </a>
