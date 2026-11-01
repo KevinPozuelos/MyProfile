@@ -14,8 +14,8 @@ interface Props {
 const { title, description } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 
-// Imagen Open Graph generada en build a partir de la foto de perfil.
-const ogImage = await getImage({ src: profile.photo.src, width: 1200, height: 1200, format: 'jpg' });
+// Imagen Open Graph generada en build a partir de la foto de perfil (sin escalar por encima del original).
+const ogImage = await getImage({ src: profile.photo.src, format: 'jpg', quality: 85 });
 const ogImageUrl = new URL(ogImage.src, Astro.site);
 
 const jsonLd = {
